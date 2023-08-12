@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mein Vaterland</title>
+    <style>
+        @keyframes rotation {
+            from {
+                transform: rotate(-45deg);
+            }
+
+            to {
+                transform: rotate(45deg);
+            }
+        }
+
+        :root {
+            --background-color: #CB2B1D;
+            --circle-color: #FFF;
+            --symbol-color: #000;
+            --unit: min(10vh, 10vw);
+            --size: min(75vh, 75vw);
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            background-color: var(--background-color);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .circle {
+            height: var(--size);
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            background-color: var(--circle-color);
+            position: relative;
+            left: calc(50% - var(--size) / 2);
+            top: calc(50% - var(--size) / 2);
+            animation: 1s linear infinite rotation;
+        }
+
+        .paused {
+            animation-play-state: paused;
+        }
+
+        .base {
+            background-color: var(--symbol-color);
+            width: var(--unit);
+            height: var(--unit);
+            position: absolute;
+        }
+
+        .cross {
+            height: calc(5 * var(--unit));
+            left: calc(50% - var(--unit) / 2);
+            top: calc(50% - 5 / 2 * var(--unit));
+        }
+
+        .rotated {
+            transform: rotate(90deg);
+        }
+
+        .vertical {
+            height: calc(3 * var(--unit));
+        }
+
+        .horizontal {
+            width: calc(3 * var(--unit));
+        }
+
+        .top {
+            top: calc(50% - 5 / 2 * var(--unit));
+        }
+
+        .bottom {
+            bottom: calc(50% - 5 / 2 * var(--unit));
+        }
+
+        .right {
+            right: calc(50% - 5 / 2 * var(--unit));
+        }
+
+        .left {
+            left: calc(50% - 5 / 2 * var(--unit));
+        }
+    </style>
+</head>
+
+<body onclick="playpause()">
+    <audio loop>
+        <source src="https://zvukipro.com/uploads/files/2022-06/1656243359_gimn-ljuftvaffe.mp3" type="audio/mpeg">
+    </audio>
+    <div class="circle paused">
+        <div class="base cross"></div>
+        <div class="base cross rotated"></div>
+        <div class="base vertical top left"></div>
+        <div class="base vertical bottom right"></div>
+        <div class="base horizontal top right"></div>
+        <div class="base horizontal bottom left"></div>
+    </div>
+    <script>
+        function playpause() {
+            const audio = document.querySelector('audio');
+            const circle = document.querySelector('.circle');
+            if (audio.paused) {
+                audio.play();
+                circle.style.animationPlayState = 'running';
+            } else {
+                audio.pause();
+                circle.style.animationPlayState = 'paused';
+            }
+        }
+    </script>
+</body>
+
+</html>
