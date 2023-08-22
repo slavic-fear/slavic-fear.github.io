@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,94 +14,38 @@
                 transform: rotate(45deg);
             }
         }
-
-        :root {
-            --background-color: #CB2B1D;
-            --circle-color: #FFF;
-            --symbol-color: #000;
-            --unit: min(10vh, 10vw);
-            --size: min(75vh, 75vw);
-        }
-
         body {
             height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
             margin: 0;
-            background-color: var(--background-color);
+            background-color: #CB2B1D;
             overflow: hidden;
             cursor: pointer;
         }
-
         .circle {
-            height: var(--size);
-            aspect-ratio: 1 / 1;
-            border-radius: 50%;
-            background-color: var(--circle-color);
-            position: relative;
-            left: calc(50% - var(--size) / 2);
-            top: calc(50% - var(--size) / 2);
+            transform-origin: 50% 50%;
             animation: 1s linear infinite rotation;
         }
-
         .paused {
             animation-play-state: paused;
         }
-
-        .base {
-            background-color: var(--symbol-color);
-            width: var(--unit);
-            height: var(--unit);
-            position: absolute;
-        }
-
-        .cross {
-            height: calc(5 * var(--unit));
-            left: calc(50% - var(--unit) / 2);
-            top: calc(50% - 5 / 2 * var(--unit));
-        }
-
-        .rotated {
-            transform: rotate(90deg);
-        }
-
-        .vertical {
-            height: calc(3 * var(--unit));
-        }
-
-        .horizontal {
-            width: calc(3 * var(--unit));
-        }
-
-        .top {
-            top: calc(50% - 5 / 2 * var(--unit));
-        }
-
-        .bottom {
-            bottom: calc(50% - 5 / 2 * var(--unit));
-        }
-
-        .right {
-            right: calc(50% - 5 / 2 * var(--unit));
-        }
-
-        .left {
-            left: calc(50% - 5 / 2 * var(--unit));
-        }
     </style>
 </head>
-
 <body onclick="playpause()">
-    <audio loop>
+    <audio loop muted>
         <source src="https://zvukipro.com/uploads/files/2022-06/1656243359_gimn-ljuftvaffe.mp3" type="audio/mpeg">
     </audio>
-    <div class="circle paused">
-        <div class="base cross"></div>
-        <div class="base cross rotated"></div>
-        <div class="base vertical top left"></div>
-        <div class="base vertical bottom right"></div>
-        <div class="base horizontal top right"></div>
-        <div class="base horizontal bottom left"></div>
-    </div>
+    <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g class="circle paused">
+            <circle cx="50%" cy="50%" r="37.5%" fill="#fff" />
+            <path d="M45 45V25h30v10H55v10h20v30H65V55H55v20H25V65h20V55H25V25h10v20Z" />
+        </g>
+    </svg>
     <script>
+        window.addEventListener('resize', () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        });
         function playpause() {
             const audio = document.querySelector('audio');
             const circle = document.querySelector('.circle');
@@ -116,5 +59,4 @@
         }
     </script>
 </body>
-
 </html>
